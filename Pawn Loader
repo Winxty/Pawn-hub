@@ -1,10 +1,8 @@
 if game.PlaceId == 189707 then
     print("Natrual Disaster Survival Script")
-end
 
 elseif game.PlaceId == 16732694052 then
     print("Fisch script")
-end
 
 elseif game.PlaceId == 4483381587 then
     print("Basplat")
