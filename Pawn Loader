@@ -4,6 +4,6 @@ if game.PlaceId == 189707 then
 elseif game.PlaceId == 16732694052 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Fisch"))()
 
-elseif game.PlaceId == 4483381587 then
+else
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Universal")()
 end
