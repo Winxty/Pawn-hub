@@ -2,7 +2,7 @@ if game.PlaceId == 189707 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Natrual%20Disaster%20Survival"))()
 
 elseif game.PlaceId == 16732694052 then
-    print("Fisch script")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Fisch"))()
 
 elseif game.PlaceId == 4483381587 then
     print("Basplat")
