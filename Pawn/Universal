@@ -215,7 +215,7 @@ local function updatePlayerDropdown()
 end
 
 Dropdown = Tabs.Player:AddDropdown("TeleportToPlayerDropdown", {
-    Title = "Teleport to Player ( Bugged )",
+    Title = "Teleport to Player",
     Values = {}, -- Start empty
     Multi = false,
 })
