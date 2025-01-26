@@ -4,9 +4,6 @@ if game.PlaceId == 189707 then
 elseif game.PlaceId == 16732694052 then
 
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Fisch"))()
-elseif game.PlaceId == 537413528
-    print("Skibidi toilet sigma rizz ohio")
 else
-
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Universal"))()
 end
