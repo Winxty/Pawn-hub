@@ -149,6 +149,7 @@ local Slider = Tabs.Player:AddSlider("Slider", {
             local character = game.Players.LocalPlayer.Character
             if character and character:FindFirstChild("Humanoid") then
                 character.Humanoid.JumpPower = Value
+		character.Humanoid.JumpHeight = Value
             end
         end)
     end
