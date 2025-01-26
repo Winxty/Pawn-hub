@@ -5,5 +5,5 @@ elseif game.PlaceId == 16732694052 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Fisch"))()
 
 else
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Universal")()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Universal"))()
 end
