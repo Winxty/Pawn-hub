@@ -377,6 +377,13 @@ Tabs.Player:AddButton({
         Duration = 8
     })
 
+Fluent:Notify({
+        Title = "Game is not supported",
+        Content = "Loaded Universal",
+        SubContent = "🌐",
+        Duration = 5
+})
+
     -- Use SaveManager to load an auto-loaded config
     SaveManager:LoadAutoloadConfig()
 end
