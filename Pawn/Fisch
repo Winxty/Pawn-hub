@@ -498,7 +498,7 @@ local isFrozen = false
 
 -- Dropdown for selecting the teleport location
 local Dropdown = Tabs.Fishing:AddDropdown("IslandDropdown", {
-    Title = "Teleport To Island",
+    Title = "Choose Zone",
     Values = {"Ancient Isles Pond", "Cryogenic Canal", "Forsaken Shores Pond", "The Depths"},
     Multi = false,
     Default = nil,
