@@ -1,0 +1,357 @@
+local MarketplaceService = game:GetService("MarketplaceService")
+local GameName = Instance.new("StringValue")
+GameName.Name = "GameName"
+GameName.Value = MarketplaceService:GetProductInfo(game.PlaceId).Name
+GameName.Parent = game.Workspace
+
+
+
+local DisplayName = game.Players.LocalPlayer.DisplayName
+print("Display found")
+print(DisplayName)
+
+
+local PlayerName = game.Players.LocalPlayer.Name
+print("User found")
+print(PlayerName)
+
+
+
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "Pawn Script [AD]",
+    SubTitle = GameName.Value,
+    TabWidth = 130,
+    Size = UDim2.fromOffset(700, 520),
+    Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Darker",
+    MinimizeKey = Enum.KeyCode.K -- Used when theres no MinimizeKeybind
+})
+
+-- Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "play" }),
+    Player = Window:AddTab({ Title = "Player", Icon = "person-standing" }),
+    MSG = Window:AddTab({ Title = "MSG", Icon = "dot" }),
+    Misc = Window:AddTab({ Title = "Miscellaneous", Icon = "shuffle" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+;local bb=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+bb:CaptureController()bb:ClickButton2(Vector2.new())
+ab.Text="Roblox tried kicking you buy I didnt let them!"wait(2)ab.Text="Status : Active"end)
+
+local Options = Fluent.Options
+
+do
+
+
+
+
+
+-- << Main tab >> --
+
+Fluent:Notify({
+        Title = "Pawn Is Loading",
+        Content = "This Wont Take Long",
+        SubContent = "➡",
+        Duration = 5
+})
+
+
+
+
+Tabs.Main:AddParagraph({
+    Title = "Welcome " .. DisplayName .. "!",
+    Content = "User: " .. PlayerName,
+})
+
+Tabs.Main:AddParagraph({
+    Title = "Changelog",
+    Content = "Added Gui."
+})
+
+
+-- << Player tab >> --
+
+
+local IsSpeedy = false
+local RunService = game:GetService("RunService")
+local HeartbeatConnection
+
+local Slider = Tabs.Player:AddSlider("Slider", {
+    Title = "WalkSpeed",
+    Description = "This Makes You Go Wroom",
+    Default = 16,
+    Min = 16,
+    Max = 1000,
+    Rounding = 1,
+    Callback = function(Value)
+        IsSpeedy = true
+
+        -- Disconnect any existing Heartbeat connection to avoid duplicates
+        if HeartbeatConnection then
+            HeartbeatConnection:Disconnect()
+        end
+
+        -- Connect to Heartbeat for smooth updates
+        HeartbeatConnection = RunService.Heartbeat:Connect(function()
+            if not IsSpeedy then
+                if HeartbeatConnection then
+                    HeartbeatConnection:Disconnect()
+                end
+                return
+            end
+
+            local character = game.Players.LocalPlayer.Character
+            if character and character:FindFirstChild("Humanoid") then
+                character.Humanoid.WalkSpeed = Value
+            end
+        end)
+    end
+})
+
+
+    
+Tabs.Player:AddButton({
+        Title = "Infinite jump",
+        Description = "Lets you jump infintely what else",
+        Callback = function()
+
+
+    --Toggles the infinite jump between on or off on every script run
+_G.infinjump = not _G.infinjump
+
+if _G.infinJumpStarted == nil then
+	--Ensures this only runs once to save resources
+	_G.infinJumpStarted = true
+	
+	--Notifies readiness
+	game.StarterGui:SetCore("SendNotification", {Title="WeAreDevs.net"; Text="The WeAreDevs Infinite Jump exploit is ready!"; Duration=5;})
+
+	--The actual infinite jump
+	local plr = game:GetService('Players').LocalPlayer
+	local m = plr:GetMouse()
+	m.KeyDown:connect(function(k)
+		if _G.infinjump then
+			if k:byte() == 32 then
+			humanoid = game:GetService'Players'.LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+			humanoid:ChangeState('Jumping')
+			wait()
+			humanoid:ChangeState('Seated')
+			end
+		end
+	end)
+end
+                
+        end
+    })
+
+
+
+
+
+-- << MSG tab >> --
+
+
+local TextChatService = game:GetService("TextChatService")
+
+local function SendChatMessage(message)
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        local textChannel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+        if textChannel then
+            textChannel:SendAsync(message)
+        else
+            warn("Text channel RBXGeneral not found")
+        end
+    else
+        local chatEvent = game:GetService("ReplicatedStorage"):FindFirstChild("DefaultChatSystemChatEvents")
+        if chatEvent then
+            chatEvent.SayMessageRequest:FireServer(message, "All")
+        else
+            warn("DefaultChatSystemChatEvents not found")
+        end
+    end
+end
+ 
+
+Tabs.MSG:AddButton({
+    Title = "Send Message",
+    Description = "",
+    Callback = function()
+
+        SendChatMessage("Join Pawn Hub Today")
+
+    end
+})
+
+Tabs.MSG:AddButton({
+    Title = "Send Discord link",
+    Description = "",
+    Callback = function()
+
+        SendChatMessage("d1sc0rd.gg/52QaAMTMeH")
+
+    end
+})
+
+Tabs.MSG:AddButton({
+    Title = "Fix Tags [Kinda works]",
+    Description = "",
+    Callback = function()
+
+        SendChatMessage("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+")
+
+    end
+})
+
+
+
+
+
+
+
+
+    
+
+-- << Misc tab >> --
+
+Tabs.Misc:AddButton({
+    Title = "Look for backdoors",
+    Description = "Scans for potential backdoors in the game [Only works with high level executors]",
+    Callback = function()
+
+        local lp = game:GetService("Players").LocalPlayer
+local mt = getrawmetatable(game)
+local old_nc = mt.__namecall
+setreadonly(mt, false)
+
+-- Developer simulation setup
+local fake_dev_id = 12345678 -- Replace with the developer's UserId (if known)
+local fake_dev_name = "FakeDeveloperName" -- Replace with the developer's name (if known)
+
+-- Spoof player identity
+local function spoof_identity()
+    lp.UserId = fake_dev_id
+    lp.Name = fake_dev_name
+    lp.DisplayName = fake_dev_name
+end
+
+-- Intercept namecall to block kicks and mimic legitimate developer behavior
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    if method == "Kick" then
+        return nil -- Block all kick attempts
+    elseif method == "FireServer" or method == "InvokeServer" then
+        -- Mimic legitimate developer actions
+        local args = { ... }
+        if tostring(self):lower():find("log") or tostring(self):lower():find("admin") then
+            return old_nc(self, unpack(args)) -- Allow normal logs
+        end
+        return nil -- Block other suspicious signals
+    end
+    return old_nc(self, ...)
+end)
+
+-- Simulate developer signals
+local function simulate_dev_activity()
+    local dev_console_signal = game:GetService("ReplicatedStorage"):FindFirstChild("DevConsoleSignal")
+    if dev_console_signal and dev_console_signal:IsA("RemoteEvent") then
+        dev_console_signal:FireServer("DeveloperAccessGranted", lp.Name)
+    end
+end
+
+-- Throttled backdoor scanning
+local function stealth_scan()
+    local potential_backdoors = {}
+    for _, obj in ipairs(game:GetDescendants()) do
+        if obj:IsA("RemoteEvent") or obj:IsA("RemoteFunction") then
+            if not obj.Name:lower():find("anticheat") then
+                table.insert(potential_backdoors, obj:GetFullName())
+            end
+            task.wait(0.1) -- Slow scan to avoid detection
+        end
+    end
+    return potential_backdoors
+end
+
+-- Intercept require calls
+local old_require = hookfunction(require, function(mod)
+    if type(mod) == "number" and mod < 100000 then
+        simulate_dev_activity() -- Mimic developer requiring scripts
+        return nil
+    end
+    return old_require(mod)
+end)
+
+-- Last hope mechanism: Block all server-side kicks
+local function last_hope_bypass()
+    local ts = game:GetService("TeleportService")
+    hookfunction(ts.Teleport, function(...)
+        return nil
+    end)
+end
+
+-- Execute the bypass and spoof
+spoof_identity()
+simulate_dev_activity()
+last_hope_bypass()
+
+-- Scan for backdoors
+local results = stealth_scan()
+for _, backdoor in ipairs(results) do
+    print("Potential Backdoor Found:", backdoor)
+end
+
+
+    end
+})
+
+
+    
+local Section = Tabs.Misc:AddSection("Infinite Yield")
+
+Tabs.Misc:AddButton({
+    Title = "Load Infinite Yield",
+    Description = "",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end
+})
+
+
+    -- Hand the library over to our managers
+    SaveManager:SetLibrary(Fluent)
+    InterfaceManager:SetLibrary(Fluent)
+
+    -- Ignore keys that are used by ThemeManager.
+    -- (we don't want configs to save themes, do we?)
+    SaveManager:IgnoreThemeSettings()
+
+    -- You can add indexes of elements the save manager should ignore
+    SaveManager:SetIgnoreIndexes({})
+
+    -- Interface manager and save manager folder setup
+    InterfaceManager:SetFolder("FluentScriptHub")
+    SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+    InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+    SaveManager:BuildConfigSection(Tabs.Settings)
+
+    -- Select the first tab by default
+    Window:SelectTab(1)
+
+    Fluent:Notify({
+        Title = "Pawn",
+        Content = "The Script Was Loaded With No Errors!",
+        Duration = 8
+    })
+
+    -- Use SaveManager to load an auto-loaded config
+    SaveManager:LoadAutoloadConfig()
+end
