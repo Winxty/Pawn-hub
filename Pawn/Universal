@@ -335,7 +335,13 @@ Tabs.Player:AddButton({
 })
 
 
-    
+ Tabs.Player:AddButton({
+    Title = "Load Pawn AD Version",
+    Description = "",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/AD'))()
+    end
+})   
 
 
 
