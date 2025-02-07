@@ -3,7 +3,7 @@ if game.PlaceId == 16732694052 then
 elseif game.PlaceId == 189707 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Natrual%20Disaster%20Survival"))()
 elseif game.PlaceId == 99078474560152 then
-    
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/M.E.G%20Endless%20Reality"))()
 else
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Universal"))()
 end
