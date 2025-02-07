@@ -30,7 +30,7 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 
 local Window = Fluent:CreateWindow({
     Title = "Pawn Script [Free]",
-    SubTitle = GameName.Value .. "(M.E.G. Endless Reality)",
+    SubTitle = GameName.Value .. " ( M.E.G. Endless Reality )",
     TabWidth = 130,
     Size = UDim2.fromOffset(700, 520),
     Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
