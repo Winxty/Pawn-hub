@@ -1,4 +1,4 @@
-print("Sigma)"
+print("Sigma")
 
 local MarketplaceService = game:GetService("MarketplaceService")
 local GameName = Instance.new("StringValue")
