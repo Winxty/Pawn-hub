@@ -6,7 +6,7 @@ GameName.Name = "GameName"
 GameName.Value = MarketplaceService:GetProductInfo(game.PlaceId).Name
 GameName.Parent = game.Workspace
 
-if GameName.Value = "M.E.G. Endless Reality" Then
+if GameName.Value == "M.E.G. Endless Reality" Then
   GameName.Value = "Lobby"
 end
 
