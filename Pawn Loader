@@ -18,5 +18,5 @@ elseif game.PlaceId == 8481844229 then
 
 else
 
-    game.Players.LocalPlayer:Kick("Wrong game broskis but i will add universal back later on lol ( ilya owo )")
+    game.Players.LocalPlayer:Kick("Wrong game broskis ( ilya owo )")
 end
