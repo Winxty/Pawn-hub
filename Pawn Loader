@@ -9,8 +9,14 @@ elseif game.PlaceId == 189707 then
 elseif game.PlaceId == 6839171747 then
     print("Loading Doors")
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Doors"))()
+
 elseif game.PlaceId == 8481844229 then
+    print("Loading Berry Avenue")
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Winxty/Pawn-hub/refs/heads/main/Pawn/Berry%20Avenue"))()
+
+
+
 else
+
     game.Players.LocalPlayer:Kick("Wrong game broskis but i will add universal back later on lol ( ilya owo )")
 end
