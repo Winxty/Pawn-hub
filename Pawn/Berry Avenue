@@ -83,7 +83,7 @@ Tabs.Main:AddParagraph({
 
 
 
-local Section = Tabs.Misc:AddSection("Dev")
+local Section = Tabs.Devt:AddSection("Dev")
 
 local DEVUNLOCKCODE = "WeArePawniesForeal"
 
