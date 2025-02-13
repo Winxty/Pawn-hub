@@ -1,0 +1,558 @@
+local MarketplaceService = game:GetService("MarketplaceService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GameName = Instance.new("StringValue")
+GameName.Name = "GameName"
+GameName.Value = MarketplaceService:GetProductInfo(game.PlaceId).Name
+GameName.Parent = game.Workspace
+
+
+
+local DisplayName = game.Players.LocalPlayer.DisplayName
+print("Display found")
+print(DisplayName)
+
+
+local PlayerName = game.Players.LocalPlayer.Name
+print("User found")
+print(PlayerName)
+
+
+
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "Pawn Script [Free]",
+    SubTitle = GameName.Value,
+    TabWidth = 130,
+    Size = UDim2.fromOffset(700, 520),
+    Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Darker",
+    MinimizeKey = Enum.KeyCode.K -- Used when theres no MinimizeKeybind
+})
+
+-- Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "play" }),
+    Player = Window:AddTab({ Title = "Player", Icon = "person-standing" }),
+    Teleports = Window:AddTab({ Title = "Teleports", Icon = "mountain" }),
+    ESP = Window:AddTab({ Title = "ESP", Icon = "eye" }),
+    Misc = Window:AddTab({ Title = "Miscellaneous", Icon = "shuffle" }),
+    Devt = Window:AddTab({ Title = "Developer", Icon = "hammer" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+
+}
+
+;local bb=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+bb:CaptureController()bb:ClickButton2(Vector2.new())
+ab.Text="Roblox tried kicking you buy I didnt let them!"wait(2)ab.Text="Status : Active"wait(0.1)print("Blocked kick: Roblox afk kick")wait(0.1)end)
+
+
+local Options = Fluent.Options
+
+do
+
+
+
+
+
+-- << Main tab >> --
+
+Fluent:Notify({
+        Title = "Pawn Is Loading",
+        Content = "This Wont Take Long",
+        SubContent = "➡",
+        Duration = 5
+})
+
+
+
+
+Tabs.Main:AddParagraph({
+    Title = "Welcome " .. DisplayName .. "!",
+    Content = "User: " .. PlayerName,
+})
+
+Tabs.Main:AddParagraph({
+    Title = "Changelog",
+    Content = "Added a key system!!!!\nThis is also just a test so far so key will get changed\nKey is WeArePawniesForeal 😭🙏"
+})
+
+
+
+local Section = Tabs.Misc:AddSection("Dev")
+
+local DEVUNLOCKCODE = "WeArePawniesForeal"
+
+function GetDev()
+
+    Tabs.Devt:AddParagraph({
+        Title = "Welcome Dev!",
+        Content = "I made a key system for the keys lol\nHope yall like it"
+    })
+
+
+    
+end
+
+
+
+
+function LockKeySystem()
+
+    local letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}|;:',.<>?/ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικλμνξοπρστυφχψωАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЭЮЯабвгдеёжзийклмнопрстуфхцчшщыэюяأبجد هوز حطي كلمن سعفص قرست ثخذ ضظغאבגדהוזחטיכלמנסעפצקרשׁת你好世界人们我爱你アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲんあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん가나다라마바사아자차카타파하กขคฆงจฉชซฌญฎฏฐฑฒนบปผฝพฟภมยรลวศษสหฬอฮabcdefghijklmnopqrstuvwxyzáàảãạấầẩẫạăắằẳẵặâấầẩẫặeéèẻẽẹêếềểễệiíìỉĩịòóỏõọôốồổỗộơớờởỡợuúùủũụôốồổỗộơớờởỡợcảàảãạơớờởỡợuúùủũụêếềểễệiíìỉĩịyýỳỷỹỵ"
+
+    local length = math.random(10, 15)
+    local randomString = ""
+
+    -- Build the random string
+    for i = 1, length do
+        local randomIndex = math.random(1, #letters)
+        randomString = randomString .. letters:sub(randomIndex, randomIndex)
+    end
+
+    -- Check if DEVUNLOCKCODE is correct, then set it to randomString
+    if DEVUNLOCKCODE == "WeArePawniesForeal" then
+        DEVUNLOCKCODE = randomString
+    end
+
+    -- Print the random string (for testing purposes)
+    print("Random String: " .. randomString)
+    
+
+end
+
+
+
+
+
+
+
+
+local Input = Tabs.Devt:AddInput("Input", {
+    Title = "Dev Key",
+    Description = "",
+    Default = "None",
+    Placeholder = "Placeholder",
+    Numeric = false, -- Only allows numbers
+    Finished = false, -- Only calls callback when you press enter
+    Callback = function(Key)
+        
+        if Key == DEVUNLOCKCODE then
+            print("Dev Unlocked")
+            LockKeySystem()
+            GetDev()
+        else
+            
+        end
+
+    end
+})
+
+
+-- << Player tab >> --
+
+
+
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+
+-- Function to update the Character reference
+local function UpdateCharacter()
+    Character = Player.Character or Player.CharacterAdded:Wait()
+end
+
+-- Listen for respawn and update Character
+Player.CharacterAdded:Connect(UpdateCharacter)
+
+-- Slider
+local Slider = Tabs.Player:AddSlider("Slider", {
+    Title = "WalkSpeed",
+    Description = "",
+    Default = 16,
+    Min = 16,
+    Max = 500,
+    Rounding = 1,
+    Callback = function(Value)
+        if Character and Character:FindFirstChild("Humanoid") then
+            Character.Humanoid.WalkSpeed = Value
+        end
+    end
+})
+
+
+    
+Tabs.Player:AddButton({
+        Title = "Infinite jump",
+        Description = "Lets you jump infintely what else",
+        Callback = function()
+
+
+    --Toggles the infinite jump between on or off on every script run
+_G.infinjump = not _G.infinjump
+
+if _G.infinJumpStarted == nil then
+	--Ensures this only runs once to save resources
+	_G.infinJumpStarted = true
+	
+
+	--The actual infinite jump
+	local plr = game:GetService('Players').LocalPlayer
+	local m = plr:GetMouse()
+	m.KeyDown:connect(function(k)
+		if _G.infinjump then
+			if k:byte() == 32 then
+			humanoid = game:GetService'Players'.LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+			humanoid:ChangeState('Jumping')
+			wait()
+			humanoid:ChangeState('Seated')
+			end
+		end
+	end)
+end
+                
+        end
+    })
+
+ 
+    local Section = Tabs.Player:AddSection("Avatar/Nametags")
+
+    local playerchar = game:GetService("Players").LocalPlayer.Character
+
+    local Toggle = Tabs.Player:AddToggle("MyToggle", 
+{
+    Title = "Become dev 🤯🤯🤯", 
+    Description = "People who aint dumb will know",
+    Default = false,
+    Callback = function(state)
+	if state then
+
+        if playerchar then
+            
+            playerchar:WaitForChild("NameTag").Dev.Visible = true
+
+        end
+	    
+	else
+        if playerchar then
+            
+            playerchar:WaitForChild("NameTag").Dev.Visible = false
+
+        end
+    end 
+end
+})
+
+
+
+
+
+
+
+local playerchar = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+local Role = playerchar:WaitForChild("NameTag").Role
+
+Role.Text = "Pawned"
+
+local ActiveRole = true
+
+local Input = Tabs.Player:AddInput("Input", {
+    Title = "Custom Role",
+    Description = "Client sided duh",
+    Default = "Pawned",
+    Placeholder = "Placeholder",
+    Numeric = false, -- Only allows numbers
+    Finished = false, -- Calls callback while typing
+    Callback = function(Rolee)
+        -- Update the role while typing
+        Role.Text = Rolee
+    end
+})
+
+-- Ensure Input exists before connecting the event
+if Input and Input.TextBox then
+    Input.TextBox:GetPropertyChangedSignal("Text"):Connect(function()
+        -- Update the role while typing
+        Role.Text = Input.TextBox.Text
+    end)
+end
+
+
+
+local Colorpicker = Tabs.Player:AddColorpicker("Colorpicker", {
+    Title = "Role Color",
+    Description = "",
+    Default = Color3.fromRGB(255, 226, 80)
+})
+
+Colorpicker:OnChanged(function()
+    
+    wait(0.1)
+    Role.TextColor3 = Colorpicker.Value
+
+end)
+
+
+
+
+-- << Teleports Tab >> --
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local Dropdown
+local function updatePlayerDropdown()
+    local players = {"None"} -- Add "None" as the first option
+    for _, p in pairs(game.Players:GetPlayers()) do
+        if p ~= player then -- Exclude the local player
+            table.insert(players, p.Name)
+        end
+    end
+
+    if Dropdown then
+        Dropdown.Values = players
+        Dropdown:SetValue("None") -- Default to "None"
+    end
+end
+
+Dropdown = Tabs.Teleports:AddDropdown("TeleportToPlayerDropdown", {
+    Title = "Teleport to Player",
+    Values = {}, -- Start empty
+    Multi = false,
+})
+
+Dropdown:OnChanged(function(playerName)
+    if playerName == "None" then
+        
+        -- Optionally teleport to current position
+        -- character:SetPrimaryPartCFrame(character.PrimaryPart.CFrame)
+    elseif playerName and playerName ~= "" then
+        local targetPlayer = game.Players:FindFirstChild(playerName)
+        if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            character:SetPrimaryPartCFrame(targetPlayer.Character.HumanoidRootPart.CFrame)
+            Dropdown:SetValue("None")
+        else
+            
+        end
+    else
+        
+    end
+end)
+
+game.Players.PlayerAdded:Connect(updatePlayerDropdown)
+game.Players.PlayerRemoving:Connect(updatePlayerDropdown)
+
+updatePlayerDropdown()
+
+
+
+
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+-- Define teleport locations
+local Locations = {
+    ["Spawn"] = CFrame.new(-16.3268, 10.6865, -243.0754),
+    ["Apartments"] = CFrame.new(-761.514, 16.2409, -160.2938),
+    ["School"] = CFrame.new(-32.141, 11.9775, 744.6776),
+    ["Houses"] = CFrame.new(1782.6614, 11.0817, 125.5293)
+}
+
+-- Instant teleport function
+function Tweentp(location)
+    local destination = Locations[location]
+    if hrp and destination then
+        hrp.CFrame = destination
+    else
+        warn("Invalid location!")
+    end
+end
+
+-- Create dropdown for locations
+local Dropdown = Tabs.Teleports:AddDropdown("TeleportDropdown", {
+    Title = "Teleport to Location",
+    Values = {"None", "Spawn", "Apartments", "School", "Houses"},
+    Multi = false,
+    Default = "None",
+    Callback = function(selectedLocation)
+        if selectedLocation ~= "None" then
+            Tweentp(selectedLocation)
+            Dropdown:SetValue("None")
+        end
+    end
+})
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+-- << ESP tab >> --
+
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local ESP_Enabled = false  -- Default off
+
+-- Function to create ESP
+local function addESP(player)
+    if player ~= LocalPlayer then
+        local character = player.Character or player.CharacterAdded:Wait()
+        local highlight = character:FindFirstChild("ESP_Highlight")
+        
+        if not highlight then
+            highlight = Instance.new("Highlight")
+            highlight.Name = "ESP_Highlight"
+            highlight.Parent = character
+            highlight.Adornee = character
+            highlight.FillColor = Color3.fromRGB(255, 0, 0)
+            highlight.OutlineColor = Color3.fromRGB(0, 0, 0)
+            highlight.FillTransparency = 0.5
+            highlight.OutlineTransparency = 0
+        end
+        
+        highlight.Enabled = ESP_Enabled  -- Toggle visibility based on ESP state
+    end
+end
+
+-- Function to toggle ESP
+local function toggleESP(state)
+    ESP_Enabled = state
+
+    -- Update ESP for all players
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character then
+            local highlight = player.Character:FindFirstChild("ESP_Highlight")
+            if highlight then
+                highlight.Enabled = ESP_Enabled
+            else
+                addESP(player)
+            end
+        end
+    end
+end
+
+-- Hook into player joining/leaving
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        if ESP_Enabled then
+            addESP(player)
+        end
+    end)
+end)
+
+-- Add Fluent Toggle
+local Toggle = Tabs.ESP:AddToggle("ESP_Toggle", {
+    Title = "ESP Players",
+    Description = "",
+    Default = false,
+    Callback = function(state)
+        toggleESP(state)
+    end
+})
+
+
+
+
+
+
+
+
+
+    
+
+-- << Misc tab >> --
+
+
+
+    
+local Section = Tabs.Misc:AddSection("Infinite Yield")
+
+Tabs.Misc:AddButton({
+    Title = "Load Infinite Yield",
+    Description = "",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end
+})
+
+
+
+local Section = Tabs.Misc:AddSection("Pawn")
+
+Tabs.Misc:AddButton({
+    Title = "Destroy Pawn",
+    Description = "Destroys the pawn script",
+    Callback = function()
+        Window:Dialog({
+            Title = "Are you sure?",
+            Content = "This Window Will Not Be Able To Be Opened Again",
+            Buttons = {
+                { 
+                    Title = "Yes",
+                    Callback = function()
+                        Role.Text = "Criminal"
+                        Role.TextColor3 = Color3.fromRGB(255, 226, 79)
+                        warn("Killing Pawn...")
+
+                        Fluent:Destroy()
+                    end 
+                },
+                {
+                    Title = "No",
+                    Callback = function()
+                        print("Cancelling Destroy")
+                    end 
+                }
+            }
+        })  
+    end
+})
+
+
+    -- Hand the library over to our managers
+    SaveManager:SetLibrary(Fluent)
+    InterfaceManager:SetLibrary(Fluent)
+
+    -- Ignore keys that are used by ThemeManager.
+    -- (we don't want configs to save themes, do we?)
+    SaveManager:IgnoreThemeSettings()
+
+    -- You can add indexes of elements the save manager should ignore
+    SaveManager:SetIgnoreIndexes({})
+
+    -- Interface manager and save manager folder setup
+    InterfaceManager:SetFolder("FluentScriptHub")
+    SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+    InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+    SaveManager:BuildConfigSection(Tabs.Settings)
+
+    -- Select the first tab by default
+    Window:SelectTab(1)
+
+    Fluent:Notify({
+        Title = "Pawn",
+        Content = "The Script Was Loaded With No Errors!",
+        Duration = 8
+    })
+
+    -- Use SaveManager to load an auto-loaded config
+    SaveManager:LoadAutoloadConfig()
+end
