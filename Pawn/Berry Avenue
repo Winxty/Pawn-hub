@@ -19,6 +19,56 @@ print(PlayerName)
 
 
 
+
+local safe = game.Workspace:FindFirstChild("Safepart")
+
+local function safepart()
+
+    
+
+    if safe then
+
+        print("Safe part already exists, skipping creation")
+        wait(0.1)
+
+    
+    else
+
+        print("Safe part does not exist, creating Safe part")
+        local safe = Instance.new("Part")
+        safe.Name = "Safepart"
+        safe.Size = Vector3.new(50, 10, 50)
+        safe.Color = Color3.fromRGB(155, 155, 155)
+        safe.Position = Vector3.new(-16, 10000, -243)
+        safe.Anchored = true
+        safe.CanCollide = true
+        safe.Transparency = 0
+        safe.Parent = game.Workspace
+        print("Safe part created")
+
+    end
+
+end
+
+
+
+safepart()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
@@ -35,10 +85,11 @@ local Window = Fluent:CreateWindow({
 
 -- Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "play" }),
+    Main = Window:AddTab({ Title = "Home", Icon = "play" }),
     Player = Window:AddTab({ Title = "Player", Icon = "person-standing" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "mountain" }),
     ESP = Window:AddTab({ Title = "ESP", Icon = "eye" }),
+    Host = Window:AddTab({ Title = "Host", Icon = "text" }),
     Misc = Window:AddTab({ Title = "Miscellaneous", Icon = "shuffle" }),
     Devt = Window:AddTab({ Title = "Developer", Icon = "hammer" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
@@ -82,8 +133,13 @@ Tabs.Main:AddParagraph({
 })
 
 
+local Section = Tabs.Main:AddSection("Main")
 
-local Section = Tabs.Devt:AddSection("Dev")
+
+
+
+
+
 
 local DEVUNLOCKCODE = "WeArePawniesForeal"
 
@@ -93,6 +149,101 @@ function GetDev()
         Title = "Welcome Dev!",
         Content = "I made a key system for the keys lol\nHope yall like it"
     })
+
+
+
+
+local Section = Tabs.Devt:AddSection("Dev")
+
+
+
+
+
+local safestatus = false
+
+local char = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+local player = game.Players.LocalPlayer
+
+Tabs.Devt:AddButton({
+    Title = "Debug",
+    Description = "",
+    Callback = function()
+        -- Recalculate Safe Part status
+        local safepartExists = game.Workspace:FindFirstChild("Safepart") ~= nil
+        safestatus = safepartExists
+
+        -- Recalculate house ownership
+        local ownsHouse = false
+        local plotsFolder = game.Workspace:FindFirstChild("Plots")
+
+        if plotsFolder then
+            for _, plot in ipairs(plotsFolder:GetChildren()) do
+                for _, child in ipairs(plot:GetChildren()) do
+                    if child:IsA("Model") and child:GetAttribute("Owner") == player.Name then
+                        ownsHouse = true
+                    end
+                end
+            end
+        end
+
+        -- Get in-game age
+        local ingameage = nil
+        local char = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+
+        if char then
+            ingameage = char:GetAttribute("Age") -- Directly store the attribute value
+        end
+
+        -- Get Server Admin status
+        local servAdmin = nil
+        local player = game.Players.LocalPlayer
+
+        if player then
+            servAdmin = player:GetAttribute("ServerOwner") -- Directly store the attribute value
+        end
+
+        -- Print updated values
+        print("Character Position: ", char:GetPivot())
+        print("Safe part? = " .. tostring(safestatus))
+        print("Owns House? = " .. tostring(ownsHouse))
+        print("Age? = " .. tostring(ingameage))
+        print("Server Admin? = " .. tostring(servAdmin))
+
+        Fluent:Notify({
+            Title = "Debugged",
+            Content = "Check Dev console for debug info",
+            SubContent = "", -- Optional
+            Duration = 5 -- Set to nil to make the notification not disappear
+    })
+
+
+    end
+
+})
+
+
+
+
+
+
+
+    local Section = Tabs.Devt:AddSection("Infinite Yield")
+
+    Tabs.Devt:AddButton({
+        Title = "Load Infinite Yield",
+        Description = "",
+        Callback = function()
+            loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+        end
+    })
+
+
+
+
+
+
+
+
 
 
     
@@ -157,6 +308,31 @@ local Input = Tabs.Devt:AddInput("Input", {
 
 
 
+local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+
+
+local Toggle = Tabs.Player:AddToggle("MyToggle", 
+{
+    Title = "Freeze Character", 
+    Description = "",
+    Default = false,
+    Callback = function(state)
+	if state then
+
+        if character then
+            character:FindFirstChild("Humanoid").RootPart.Anchored = true
+        end
+	    
+	else
+
+        if character then
+            character:FindFirstChild("Humanoid").RootPart.Anchored = false
+	    
+        end
+    end 
+end
+})
+
 
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
@@ -169,6 +345,9 @@ end
 
 -- Listen for respawn and update Character
 Player.CharacterAdded:Connect(UpdateCharacter)
+
+
+
 
 -- Slider
 local Slider = Tabs.Player:AddSlider("Slider", {
@@ -218,6 +397,7 @@ end
                 
         end
     })
+    
 
  
     local Section = Tabs.Player:AddSection("Avatar/Nametags")
@@ -300,7 +480,192 @@ end)
 
 
 
+local Section = Tabs.Player:AddSection("Name Presets")
+
+local namepresets = {} -- Stores custom names
+local cname = game.Players.LocalPlayer.PlayerGui:WaitForChild("Gui").AvatarEditor:WaitForChild("Menus").Age.Info.RPName.Input
+
+-- Function to save a new preset
+local function SavePreset(name)
+    if name ~= "" and not table.find(namepresets, name) then
+        table.insert(namepresets, name)
+        print("Saved Preset: " .. name)
+    end
+end
+
+-- Function to remove a preset
+local function RemovePreset(name)
+    for i, v in ipairs(namepresets) do
+        if v == name then
+            table.remove(namepresets, i)
+            print("Removed Preset: " .. name)
+            return
+        end
+    end
+end
+
+-- Function to load a preset by selection
+local function LoadPreset(selectedName)
+    if selectedName then
+        cname.Text = selectedName
+        print("Loaded Preset: " .. selectedName)
+    end
+end
+
+-- Button to save the current name as a preset
+Tabs.Player:AddButton({
+    Title = "Save Current Name",
+    Description = "",
+    Callback = function()
+        SavePreset(cname.Text)
+    end
+})
+
+-- Dropdown to select a saved preset
+local PresetDropdown = Tabs.Player:AddDropdown("Load Preset", {
+    Title = "Select a Preset",
+    Description = "Presets are pasted into the name input, so press apply changes.",
+    Values = namepresets,
+    Multi = false,
+    Callback = function(selectedName)
+        LoadPreset(selectedName)
+    end
+})
+
+-- Button to remove a selected preset
+Tabs.Player:AddButton({
+    Title = "Remove Selected Preset",
+    Description = "",
+    Callback = function()
+        local selectedName = PresetDropdown.Value
+        if selectedName then
+            RemovePreset(selectedName)
+            PresetDropdown:SetValues(namepresets) -- Update dropdown list
+        end
+    end
+})
+
+-- Button to refresh dropdown (in case new presets are added)
+Tabs.Player:AddButton({
+    Title = "Refresh Presets",
+    Description = "Use when new presets are added or removed.",
+    Callback = function()
+        PresetDropdown:SetValues(namepresets) -- Update dropdown with new presets
+    end
+})
+
+
+
+
+
+
+
+
+
+local Section = Tabs.Player:AddSection("Misc")
+
+
+local characterList = {"★", "《  》", "「 」", "【 】", "°", "☉", "†", "ˁ ˀ", "∙", "₍ ₎", "♀", "♂", "♡"}
+
+local CC = characterList[1] -- Default character
+
+local Dropdown = Tabs.Player:AddDropdown("Dropdown", {
+    Title = "Dropdown",
+    Description = "Dropdown description",
+    Values = characterList,
+    Multi = false,
+    Default = 1,
+
+    Callback = function(selectedValue)
+        if type(selectedValue) == "number" then
+            CC = characterList[selectedValue]
+        else
+            CC = selectedValue
+        end
+    end
+})
+
+
+Tabs.Player:AddButton({
+    Title = "Copy Characters",
+    Description = "",
+    Callback = function()
+        setclipboard(CC)
+        
+    end
+})
+
+Tabs.Player:AddParagraph({
+    Title = "If Character Didnt Copy",
+    Content = "If the character didnt copy and you got for example â˜…\nGo into the name editor tab\nThen use the copy v2 down below\nThe character will be pasted inside the name editor\nThen you can copy it from there"
+})
+
+local cname = game.Players.LocalPlayer.PlayerGui:WaitForChild("Gui").AvatarEditor:WaitForChild("Menus").Age.Info.RPName.Input
+
+Tabs.Player:AddButton({
+    Title = "Copy Characters v2",
+    Description = "",
+    Callback = function()
+        print("Current Name: " .. cname.Text .. " | New Name: " .. cname.Text .. CC)
+        cname.Text = cname.Text .. CC  -- Fix: Use cname.Text instead of cname
+    end
+})
+
+
+
+
+
+
+
+
+
+
+
+
 -- << Teleports Tab >> --
+
+Tabs.Teleports:AddButton({
+    Title = "Teleport to spawn",
+    Description = "",
+    Callback = function()
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-16.3268, 10.6865, -243.0754)
+
+    end
+})
+
+
+
+
+
+
+
+
+Tabs.Teleports:AddButton({
+    Title = "Teleport to safe",
+    Description = "Can be used for changing avatars privately",
+    Callback = function()
+
+
+
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-16, 10010, -243)
+
+    end
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -360,10 +725,24 @@ local hrp = character:WaitForChild("HumanoidRootPart")
 
 -- Define teleport locations
 local Locations = {
-    ["Spawn"] = CFrame.new(-16.3268, 10.6865, -243.0754),
-    ["Apartments"] = CFrame.new(-761.514, 16.2409, -160.2938),
-    ["School"] = CFrame.new(-32.141, 11.9775, 744.6776),
-    ["Houses"] = CFrame.new(1782.6614, 11.0817, 125.5293)
+    
+    ["Apartments"] = CFrame.new(-735.5060424804688, 10.436481475830078, -160.55471801757812),
+    ["HighSchool"] = CFrame.new(-35.650142669677734, 17.039472579956055, 561.9757080078125),
+    ["Houses"] = CFrame.new(1782.6614, 11.0817, 125.5293),
+    ["Airport"] = CFrame.new(587.700927734375, 32.32146453857422, 1976.94384765625),
+    ["Bakery"] = CFrame.new(180.98008728027344, 13.468881607055664, -98.25546264648438),
+    ["Bank"] = CFrame.new(431.1841735839844, 35.123748779296875, 938.9663696289062),
+    ["Coffe House"] = CFrame.new(-250.42315673828125, 12.90301513671875, -41.54947280883789),
+    ["Daycare"] = CFrame.new(483.3843688964844, 13.374637603759766, 639.9404296875),
+    ["Fire Station"] = CFrame.new(305.3366394042969, 31.827478408813477, 949.3425903320312),
+    ["Gas Station"] = CFrame.new(271.9364013671875, 12.90301513671875, 297.0307312011719),
+    ["Grocery Store"] = CFrame.new(557.4177856445312, 12.350186347961426, 335.7955017089844),
+    ["Police Station"] = CFrame.new(-984.3167114257812, 40.46616744995117, 494.6744689941406),
+    ["Nail Salon"] = CFrame.new(0.36734867095947266, 13.468881607055664, -70.80908203125),
+    ["Hair Salon"] = CFrame.new(127.31651306152344, 13.468881607055664, -98.25546264648438),
+    ["Beach"] = CFrame.new(-216.66650390625, 12.350186347961426, -343.3359069824219),
+    ["Hospital"] = CFrame.new(-751.1329956054688, 35.645782470703125, 263.1784362792969),
+    ["MidnightClub"] = CFrame.new(-11.722695350646973, 12.90301513671875, 71.30685424804688)
 }
 
 -- Instant teleport function
@@ -379,7 +758,8 @@ end
 -- Create dropdown for locations
 local Dropdown = Tabs.Teleports:AddDropdown("TeleportDropdown", {
     Title = "Teleport to Location",
-    Values = {"None", "Spawn", "Apartments", "School", "Houses"},
+    Values = {
+        "Airport", "Apartments", "Bakery", "Bank", "Beach", "Coffe House", "Daycare", "Fire Station", "Gas Station", "Grocery Store", "Hair Salon", "HighSchool", "Hospital", "Houses", "MidnightClub", "Nail Salon", "Police Station"},
     Multi = false,
     Default = "None",
     Callback = function(selectedLocation)
@@ -405,29 +785,53 @@ local Dropdown = Tabs.Teleports:AddDropdown("TeleportDropdown", {
 
 -- << ESP tab >> --
 
-
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local ESP_Enabled = false  -- Default off
+local ESP_Color = Color3.fromRGB(231, 155, 219) -- Default color
+
+-- Add Fluent Color Picker
+local Colorpicker = Tabs.ESP:AddColorpicker("Colorpicker", {
+    Title = "ESP Color",
+    Description = "",
+    Default = ESP_Color
+})
+
+Colorpicker:OnChanged(function(newColor)
+    ESP_Color = newColor  -- Update ESP color
+    
+    -- Update all ESP highlights with new color
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character then
+            local highlight = player.Character:FindFirstChild("ESP_Highlight")
+            if highlight then
+                highlight.FillColor = ESP_Color
+                highlight.OutlineColor = ESP_Color
+            end
+        end
+    end
+end)
 
 -- Function to create ESP
 local function addESP(player)
     if player ~= LocalPlayer then
-        local character = player.Character or player.CharacterAdded:Wait()
-        local highlight = character:FindFirstChild("ESP_Highlight")
-        
-        if not highlight then
-            highlight = Instance.new("Highlight")
-            highlight.Name = "ESP_Highlight"
-            highlight.Parent = character
-            highlight.Adornee = character
-            highlight.FillColor = Color3.fromRGB(255, 0, 0)
-            highlight.OutlineColor = Color3.fromRGB(0, 0, 0)
+        player.CharacterAdded:Connect(function(character)
+            task.wait(0.5) -- Ensure the character loads
+            local highlight = character:FindFirstChild("ESP_Highlight")
+            
+            if not highlight then
+                highlight = Instance.new("Highlight")
+                highlight.Name = "ESP_Highlight"
+                highlight.Parent = character
+                highlight.Adornee = character
+            end
+            
+            highlight.FillColor = ESP_Color
+            highlight.OutlineColor = ESP_Color
             highlight.FillTransparency = 0.5
             highlight.OutlineTransparency = 0
-        end
-        
-        highlight.Enabled = ESP_Enabled  -- Toggle visibility based on ESP state
+            highlight.Enabled = ESP_Enabled
+        end)
     end
 end
 
@@ -448,14 +852,8 @@ local function toggleESP(state)
     end
 end
 
--- Hook into player joining/leaving
-Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function()
-        if ESP_Enabled then
-            addESP(player)
-        end
-    end)
-end)
+-- Hook into player joining
+Players.PlayerAdded:Connect(addESP)
 
 -- Add Fluent Toggle
 local Toggle = Tabs.ESP:AddToggle("ESP_Toggle", {
@@ -469,28 +867,141 @@ local Toggle = Tabs.ESP:AddToggle("ESP_Toggle", {
 
 
 
+-- << Host tab >> --
+
+local TextChatService = game:GetService("TextChatService")
+
+local function SendChatMessage(message)
+    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+        local textChannel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+        if textChannel then
+            textChannel:SendAsync(message)
+        else
+            warn("Text channel RBXGeneral not found")
+        end
+    else
+        local chatEvent = game:GetService("ReplicatedStorage"):FindFirstChild("DefaultChatSystemChatEvents")
+        if chatEvent then
+            chatEvent.SayMessageRequest:FireServer(message, "All")
+        else
+            warn("DefaultChatSystemChatEvents not found")
+        end
+    end
+end
 
 
 
 
 
 
-    
+local WaitTime = 15  -- Default loop delay (seconds)
+local message = nil  -- Default message
+local issending = false  -- Declare variable outside to manage state
+
+-- Slider for adjusting loop delay
+local Slider = Tabs.Host:AddSlider("Slider", {
+    Title = "Loop Delay",
+    Description = "Time between each sent message in seconds.",
+    Default = WaitTime,
+    Min = 5,
+    Max = 50,
+    Rounding = 1,
+    Callback = function(Value)
+        WaitTime = Value
+    end
+})
+
+-- Input for custom message
+local Input = Tabs.Host:AddInput("Input", {
+    Title = "Send Host Message.",
+    Description = "",
+    Default = message,
+    Placeholder = "",
+    Numeric = false,
+    Finished = false,
+    Callback = function(inputMessage)
+        message = inputMessage  -- Update the message variable with custom input
+    end
+})
+
+-- Preset messages
+local Prestets = {
+    ["HighSchool"] = "Join Our HighSchool Rp Now!",
+    ["Family"] = "Join Our Family Rp Now!",
+}
+
+-- Dropdown for selecting preset message
+local Dropdown = Tabs.Host:AddDropdown("Dropdown", {
+    Title = "Presets",
+    Description = "Select a preset message.",
+    Values = {"HighSchool", "Family"},
+    Multi = false,
+    Default = 1,
+    Callback = function(selectedPreset)
+        if selectedPreset ~= "None" then
+            message = Prestets[selectedPreset]  -- Update message with the selected preset
+        end
+    end
+})
+
+
+Tabs.Host:AddButton({
+    Title = "Send Message Once",
+    Description = "",
+    Callback = function()
+        SendChatMessage(message)
+    end
+})
+
+
+
+local Toggle = Tabs.Host:AddToggle("MyToggle", {
+    Title = "Loop Send Message", 
+    Description = "Toggle to loop the message send.",
+    Default = false,
+    Callback = function(state)
+        if state then
+            
+            issending = true
+            while issending do
+                SendChatMessage(message)
+                wait(WaitTime)
+            end
+        else
+            
+            issending = false
+        end
+    end 
+})
+
+
+
+
+
+
+
+
+
+
+
 
 -- << Misc tab >> --
 
 
+local Section = Tabs.Misc:AddSection("Game")
+
+local player = game.Players.LocalPlayer
+local humanoid = player.Character.Humanoid
+local currentppos
+
+
+
+
+
+
 
     
-local Section = Tabs.Misc:AddSection("Infinite Yield")
 
-Tabs.Misc:AddButton({
-    Title = "Load Infinite Yield",
-    Description = "",
-    Callback = function()
-        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
-    end
-})
 
 
 
@@ -510,7 +1021,6 @@ Tabs.Misc:AddButton({
                         Role.Text = "Criminal"
                         Role.TextColor3 = Color3.fromRGB(255, 226, 79)
                         warn("Killing Pawn...")
-
                         Fluent:Destroy()
                     end 
                 },
@@ -524,6 +1034,7 @@ Tabs.Misc:AddButton({
         })  
     end
 })
+
 
 
     -- Hand the library over to our managers
