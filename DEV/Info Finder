@@ -1,0 +1,117 @@
+local finding = true
+
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+
+print("--------------------------------------------------------------------------")
+print("Welcome to pawn info finder")
+print("--------------------------------------------------------------------------")
+
+warn("Keybinds Are Below")
+print("------------")
+print("Press J For JobId")
+print("------------")
+print("Press K For Player Name and Display Name")
+print("------------")
+print("Press L For Server Region")
+print("------------")
+print("Press M For Total Players")
+print("------------")
+print("Press N For Your Current Position")
+print("------------")
+print("Press V For Place Id")
+print("------------")
+warn("Press E To Exit")
+
+local UserInputService = game:GetService("UserInputService")
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:FindFirstChildOfClass("Humanoid")
+local hrp = character:FindFirstChild("HumanoidRootPart")
+
+-- Keybinds list (Modify this to add more functions)
+local Keybinds = {
+    [Enum.KeyCode.J] = function()
+        if finding then
+            print("Current Job ID: " .. game.JobId)
+        end
+    end,
+
+    [Enum.KeyCode.K] = function()
+        if finding then
+            print("Username: " .. player.Name)
+            print("User ID: " .. player.UserId)
+        end
+    end,
+
+    [Enum.KeyCode.L] = function()
+        if finding then
+            local region = game:GetService("TeleportService"):GetLocalPlayerTeleportData()
+            if region then
+                print("Current Server Region: " .. tostring(region))
+            else
+                warn("Server Region Not Reachable")
+            end
+        end
+    end,
+
+    [Enum.KeyCode.M] = function()
+        if finding then
+            print("Total Players in Server: " .. #game.Players:GetPlayers())
+        end
+    end,
+
+    [Enum.KeyCode.N] = function()
+        if finding then
+            if hrp then
+                print("Your Current Position: " .. tostring(hrp.Position))
+            else
+                print("Your character has no HumanoidRootPart!")
+            end
+        end
+    end,
+
+    [Enum.KeyCode.V] = function()
+        if finding then
+            print("Game ID (Place ID): " .. game.PlaceId)
+        end
+    end,
+
+    [Enum.KeyCode.E] = function()
+        if finding then
+            finding = false
+            print("Finding = " .. tostring(finding))
+            wait(1)
+            print("Exiting...")
+            return
+        end
+    end
+} -- <-- This was missing!
+
+-- ✅ **Only One Input Connection Now**
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and Keybinds[input.KeyCode] then
+        Keybinds[input.KeyCode]() -- Call the function assigned to the key
+    end
+end)
+
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
+print("‎ ")
